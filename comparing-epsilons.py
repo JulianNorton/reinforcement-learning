@@ -14,18 +14,12 @@ class Bandit:
 		self.N += 1
 		self.mean = (1 - 1.0/self.N)*self.mean + 1.0/self.N*x
 
-
-	# compare three different bandits
-	# eps is epsilon
-	# n is number of times we play
 	def run_experiment(m1, m2, m3, eps, N):
 		bandits = [Bandit(m1), Bandit(m2), Bandit(m3)]
 
-		# results of pulls
 		data = np.empty(N)
 
 		for i in range(N):
-			# epsilon greedy
 			p = np.random.random()
 			if p < eps:
 				j = np.random.choice(3)
@@ -34,17 +28,14 @@ class Bandit:
 			x = bandits[j].pull()
 			bandits[j].update(x)
 
-			# plot
 			data[i] = x
 
 		cumulative_average = np.cumsum(data) / (np.arange(N) + 1)
 
-		# plot average over time
 		plt.plot(cumulative_average)
 		plt.plot(np.ones(N)*m1)
 		plt.plot(np.ones(N)*m2)
 		plt.plot(np.ones(N)*m3)
-		# log to see fluctuations in earlier rounds more clearly
 		plt.xscale('log')
 		plt.show()
 
@@ -59,7 +50,6 @@ if __name__ == '__main__':
 	c_05 = run_experiment(1.0, 2.0, 3.0, 0.05, 100000)
 	c_01 = run_experiment(1.0, 2.0, 3.0, 0.01, 100000)
 
-	# log scale plot
 	plt.plot(c_1, label='eps = 0.1')
 	plt.plot(c_05, label='eps = 0.05')
 	plt.plot(c_01, label='eps = 0.01')
@@ -68,7 +58,6 @@ if __name__ == '__main__':
 	plt.show()
 
 
-	# linear plot
 	plt.plot(c_1, label='eps = 0.1')
 	plt.plot(c_05, label='eps = 0.05')
 	plt.plot(c_01, label='eps = 0.01')
