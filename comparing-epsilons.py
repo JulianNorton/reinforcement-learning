@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 class Bandit:
 	def __init__(self, m):
 		self.m = m
-		self.mean = 0
+		self.mean = 10
 		self.N = 0
 
 	def pull(self):
@@ -24,10 +24,7 @@ def run_experiment(m1, m2, m3, eps, N):
 	for i in range(N):
 		# epsilon greedy
 		p = np.random.random()
-		if p < eps:
-			j = np.random.choice(3)
-		else:
-			j = np.argmax([b.mean for b in bandits])
+		j = np.argmax([b.mean for b in bandits])
 		x = bandits[j].pull()
 		bandits[j].update(x)
 
